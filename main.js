@@ -43,24 +43,22 @@ function updateProgressbar() {
   progress.style.width = progressBar + "%";
 }
 
-const form = document.getElementById("form");
-const fullname = document.getElementById("name");
-const birthday = document.getElementById("birthday");
-const email = document.getElementById("email");
-const phone = document.getElementById("phone");
-const username = document.getElementById("username");
-const password = document.getElementById("password");
-const password2 = document.getElementById("password2");
-
 // Form Validation
 
-fullname.addEventListener("input", checkInputs);
-birthday.addEventListener("input", checkInputs);
-email.addEventListener("input", checkInputs);
-phone.addEventListener("input", checkInputs);
-username.addEventListener("input", checkInputs);
-password.addEventListener("input", checkInputs);
-password2.addEventListener("input", checkInputs);
+const form = document.getElementById("form");
+const fields = {
+  fullname: document.getElementById("name"),
+  birthday: document.getElementById("birthday"),
+  email: document.getElementById("email"),
+  phone: document.getElementById("phone"),
+  username: document.getElementById("username"),
+  password: document.getElementById("password"),
+  password2: document.getElementById("password2"),
+};
+
+Object.values(fields).forEach((field) => {
+  field.addEventListener("input", checkInputs);
+});
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -68,73 +66,25 @@ form.addEventListener("submit", (e) => {
 });
 
 function checkInputs() {
-  const fullnameValue = fullname.value.trim();
-  const birthdayValue = birthday.value.trim();
-  const usernameValue = username.value.trim();
-  const emailValue = email.value.trim();
-  const phoneValue = phone.value.trim();
-  const passwordValue = password.value.trim();
-  const password2Value = password2.value.trim();
+  const values = Object.keys(fields).reduce((acc, key) => {
+    acc[key] = fields[key].value.trim();
+    return acc;
+  }, {});
 
-  if (document.activeElement === fullname) {
-    if (fullnameValue === "") {
-      setErrorFor(fullname, "Full Name cannot be blank");
-    } else {
-      setSuccessFor(fullname);
+  Object.keys(fields).forEach((key) => {
+    const field = fields[key];
+    if (document.activeElement === field) {
+      if (values[key] === "") {
+        setErrorFor(field, `${getFieldName(key)} cannot be blank`);
+      } else if (key === "email" && !isEmail(values.email)) {
+        setErrorFor(field, "Not a valid email");
+      } else if (key === "password2" && values.password !== values.password2) {
+        setErrorFor(field, "Passwords do not match");
+      } else {
+        setSuccessFor(field);
+      }
     }
-  }
-
-  if (document.activeElement === birthday) {
-    if (birthdayValue === "") {
-      setErrorFor(birthday, "Day of Birth cannot be blank");
-    } else {
-      setSuccessFor(birthday);
-    }
-  }
-
-  if (document.activeElement === email) {
-    if (emailValue === "") {
-      setErrorFor(email, "Email cannot be blank");
-    } else if (!isEmail(emailValue)) {
-      setErrorFor(email, "Not a valid email");
-    } else {
-      setSuccessFor(email);
-    }
-  }
-
-  if (document.activeElement === phone) {
-    if (phoneValue === "") {
-      setErrorFor(phone, "Movile Phone cannot be blank");
-    } else {
-      setSuccessFor(phone);
-    }
-  }
-
-  if (document.activeElement === username) {
-    if (usernameValue === "") {
-      setErrorFor(username, "Username cannot be blank");
-    } else {
-      setSuccessFor(username);
-    }
-  }
-
-  if (document.activeElement === password) {
-    if (passwordValue === "") {
-      setErrorFor(password, "Password cannot be blank");
-    } else {
-      setSuccessFor(password);
-    }
-  }
-
-  if (document.activeElement === password2) {
-    if (password2Value === "") {
-      setErrorFor(password2, "Confirm Password cannot be blank");
-    } else if (passwordValue !== password2Value) {
-      setErrorFor(password2, "Passwords does not match");
-    } else {
-      setSuccessFor(password2);
-    }
-  }
+  });
 }
 
 function setErrorFor(input, message) {
@@ -153,6 +103,19 @@ function isEmail(email) {
   return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
     email
   );
+}
+
+function getFieldName(field) {
+  const fieldNames = {
+    fullname: "Full Name",
+    birthday: "Day of Birth",
+    email: "Email",
+    phone: "Mobile Phone",
+    username: "Username",
+    password: "Password",
+    password2: "Confirm Password",
+  };
+  return fieldNames[field];
 }
 
 //Notificacion
