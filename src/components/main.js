@@ -8,10 +8,11 @@ let currentActive = 0;
 
 nextBtn.forEach((btn) => {
   btn.addEventListener("click", () => {
-    checkInputs();
-    currentActive++;
-    updateFormSteps();
-    updateProgressbar();
+    if (checkInputs(currentActive)) {
+      currentActive++;
+      updateFormSteps();
+      updateProgressbar();
+    }
   });
 });
 
@@ -43,48 +44,68 @@ function updateProgressbar() {
   progress.style.width = progressBar + "%";
 }
 
-// Form Validation
+//Validación del form
 
 const form = document.getElementById("form");
 const fields = {
-  fullname: document.getElementById("name"),
+  name: document.getElementById("name"),
+  lastname: document.getElementById("lastname"),
   birthday: document.getElementById("birthday"),
   email: document.getElementById("email"),
   phone: document.getElementById("phone"),
+  linkedin: document.getElementById("linkedin"),
   username: document.getElementById("username"),
   password: document.getElementById("password"),
   password2: document.getElementById("password2"),
 };
 
 Object.values(fields).forEach((field) => {
-  field.addEventListener("input", checkInputs);
+  field.addEventListener("input", () => checkSingleInput(field));
 });
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
-  checkInputs();
+  if (checkInputs(currentActive)) {
+    console.log("Formulario enviado!");
+  }
 });
 
-function checkInputs() {
-  const values = Object.keys(fields).reduce((acc, key) => {
-    acc[key] = fields[key].value.trim();
-    return acc;
-  }, {});
+function checkInputs(step) {
+  let valid = true;
+  const stepInputs = formStep[step].querySelectorAll("input");
 
-  Object.keys(fields).forEach((key) => {
-    const field = fields[key];
-    if (document.activeElement === field) {
-      if (values[key] === "") {
-        setErrorFor(field, `${getFieldName(key)} cannot be blank`);
-      } else if (key === "email" && !isEmail(values.email)) {
-        setErrorFor(field, "Not a valid email");
-      } else if (key === "password2" && values.password !== values.password2) {
-        setErrorFor(field, "Passwords do not match");
-      } else {
-        setSuccessFor(field);
-      }
+  stepInputs.forEach((input) => {
+    if (!checkSingleInput(input)) {
+      valid = false;
     }
   });
+
+  return valid;
+}
+
+function checkSingleInput(input) {
+  const value = input.value.trim();
+  const id = input.id;
+
+  if (value === "") {
+    setErrorFor(input, `This field cannot be blank`);
+    return false;
+  } else if (id === "email" && !isEmail(value)) {
+    setErrorFor(input, "Not a valid email");
+    return false;
+  } else if (id === "phone" && !isPhoneNumber(value)) {
+    setErrorFor(input, "Not a valid phone number");
+    return false;
+  } else if (id === "linkedin" && !isLinkedIn(value)) {
+    setErrorFor(input, "Not a valid LinkedIn URL");
+    return false;
+  } else if (id === "password2" && fields.password.value !== value) {
+    setErrorFor(input, "Passwords do not match");
+    return false;
+  } else {
+    setSuccessFor(input);
+    return true;
+  }
 }
 
 function setErrorFor(input, message) {
@@ -105,35 +126,19 @@ function isEmail(email) {
   );
 }
 
-function getFieldName(field) {
-  const fieldNames = {
-    fullname: "Full Name",
-    birthday: "Day of Birth",
-    email: "Email",
-    phone: "Mobile Phone",
-    username: "Username",
-    password: "Password",
-    password2: "Confirm Password",
-  };
-  return fieldNames[field];
+function isPhoneNumber(phone) {
+  return /^(\d{2}-?\d{4}-?\d{4})$/.test(phone);
 }
 
-//Notificacion
+function isLinkedIn(url) {
+  return /^https:\/\/(www\.)?linkedin\.com\/in\/[a-zA-Z0-9_-]+\/?$/.test(url);
+}
 
-const submitBtn = document.querySelector(".btn-send");
-const toast = document.querySelector(".toast");
-const closeIcon = document.querySelector(".close");
-const progressToast = document.querySelector(".progress-toast");
+//General
 
-submitBtn.addEventListener("click", () => {
-  toast.classList.add("active-toast");
-  progressToast.classList.add("active-toast");
-
-  setTimeout(() => {
-    toast.classList.remove("active-toast");
-  }, 5000);
-});
-
-closeIcon.addEventListener("click", () => {
-  toast.classList.remove("active-toast");
+window.addEventListener("load", () => {
+  const element = document.querySelector(".expand-from-center");
+  if (element) {
+    element.classList.add("visible");
+  }
 });

@@ -8,10 +8,23 @@
       src="https://kit.fontawesome.com/2e5f9e07b5.js"
       crossorigin="anonymous"
     ></script>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="/src/style.css" />
+    <link rel="stylesheet" href="/src/components/background.css" />
     <title>Form Step</title>
   </head>
   <body>
+    <ul class="background">
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
     <div class="toast">
       <div class="toast-content">
         <i class="fa fa-slid fa-check check"></i>
@@ -20,78 +33,95 @@
           <p class="text-2">You have complete the Registration Form</p>
         </div>
       </div>
-
       <i class="fa fa-solid fa-xmark close"></i>
       <div class="progress-toast"></div>
     </div>
-    <div class="container">
-      <form action="#" id="form" class="form">
-        <h1>Form <br />Registration</h1>
-        <div class="progress-bar">
-          <div class="progress" id="progress"></div>
-          <div class="progress-step active"></div>
-          <div class="progress-step"></div>
-          <div class="progress-step"></div>
-        </div>
-        <div class="form-step active">
-          <div class="input-group">
-            <label for="name">Full Name</label>
-            <input type="text" name="name" id="name" />
-            <small>Error message</small>
-          </div>
-          <div class="input-group">
-            <label for="birthday">Day of Birth</label>
-            <input type="date" name="birthday" id="birthday" />
-            <small>Error message</small>
-          </div>
-          <div>
-            <button type="button" class="btn btn-next">Next</button>
-          </div>
-        </div>
 
-        <div class="form-step">
-          <div class="input-group">
-            <label for="email">Email</label>
-            <input type="email" name="email" id="email" />
-            <small>Error message</small>
+    <div class="container expand-from-center">
+      <div class="form-container">
+        <section class="form-img">
+          <img src="/src/assets/wallpaper.png" alt="" />
+        </section>
+        <form id="form" class="form">
+          <h1>Join<span>In</span></h1>
+          <p>Hello there! Complete the form registration</p>
+          <div class="progress-bar">
+            <div class="progress" id="progress"></div>
+            <div class="progress-step active"></div>
+            <div class="progress-step"></div>
+            <div class="progress-step"></div>
           </div>
-          <div class="input-group">
-            <label for="phone">Movile Phone</label>
-            <input type="phone" name="phone" id="phone" />
-            <small>Error message</small>
+          <div class="form-step active">
+            <div class="input-group">
+              <label for="name">First Name</label>
+              <input type="text" name="name" id="name" required />
+              <small>Error message</small>
+            </div>
+            <div class="input-group">
+              <label for="lastname">Last Name</label>
+              <input type="text" name="lastname" id="lastname" required />
+              <small>Error message</small>
+            </div>
+            <div class="input-group">
+              <label for="birthday">Day of Birth</label>
+              <input type="date" name="birthday" id="birthday" required />
+              <small>Error message</small>
+            </div>
+            <div>
+              <button type="button" class="btn btn-next">Next</button>
+            </div>
           </div>
-          <div class="btn-group">
-            <button type="button" class="btn btn-prev">Previous</button>
-            <button type="button" class="btn btn-next">Next</button>
-          </div>
-        </div>
 
-        <div class="form-step">
-          <div class="input-group">
-            <label for="username">Username</label>
-            <input type="text" name="username" id="username" />
-            <small>Error message</small>
+          <div class="form-step">
+            <div class="input-group">
+              <label for="email">Email</label>
+              <input type="email" name="email" id="email" required />
+              <small>Error message</small>
+            </div>
+            <div class="input-group">
+              <label for="phone">Movile Phone</label>
+              <input type="tel" name="phone" id="phone" required />
+              <small>Error message</small>
+            </div>
+            <div class="input-group">
+              <label for="linkedin">LinkedIn</label>
+              <input type="url" name="linkedin" id="linkedin" required />
+              <small>Error message</small>
+            </div>
+            <div class="btn-group">
+              <button type="button" class="btn btn-prev">Previous</button>
+              <button type="button" class="btn btn-next">Next</button>
+            </div>
           </div>
-          <div class="input-group">
-            <label for="password">Password</label>
-            <input type="password" name="password" id="password" />
-            <small>Error message</small>
+
+          <div class="form-step">
+            <div class="input-group">
+              <label for="username">Username</label>
+              <input type="text" name="username" id="username" required />
+              <small>Error message</small>
+            </div>
+            <div class="input-group">
+              <label for="password">Password</label>
+              <input type="password" name="password" id="password" required />
+              <small>Error message</small>
+            </div>
+            <div class="input-group">
+              <label for="password">Confirm Password</label>
+              <input type="password" name="password" id="password2" required />
+              <small>Error message</small>
+            </div>
+            <div class="btn-group">
+              <button type="button" class="btn btn-prev">Previous</button>
+              <button type="submit" value="submit" class="btn btn-send">
+                Send
+              </button>
+            </div>
           </div>
-          <div class="input-group">
-            <label for="password">Confirm Password</label>
-            <input type="password" name="password" id="password2" />
-            <small>Error message</small>
-          </div>
-          <div class="btn-group">
-            <button type="button" class="btn btn-prev">Previous</button>
-            <button type="submit" value="submit" class="btn btn-send">
-              Send
-            </button>
-          </div>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
 
-    <script type="module" src="/main.js"></script>
+    <script type="module" src="/src/components/main.js"></script>
+    <script type="module" src="/src/components/toast.js"></script>
   </body>
 </html>
