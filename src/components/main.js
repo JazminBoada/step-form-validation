@@ -97,7 +97,7 @@ function checkSingleInput(input) {
     setErrorFor(input, "Not a valid phone number");
     return false;
   } else if (id === "linkedin" && !isLinkedIn(value)) {
-    setErrorFor(input, "Not a valid LinkedIn URL");
+    setErrorFor(input, "Not a valid Profile LinkedIn URL");
     return false;
   } else if (id === "password2" && fields.password.value !== value) {
     setErrorFor(input, "Passwords do not match");
