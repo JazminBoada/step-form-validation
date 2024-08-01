@@ -117,7 +117,7 @@ function setSuccessFor(input) {
 function resetInputStyles() {
   Object.values(fields).forEach((input) => {
     const inputGroup = input.parentElement;
-    inputGroup.className = "input-group"; // Reset to default style
+    inputGroup.className = "input-group";
   });
 }
 
@@ -128,7 +128,7 @@ function isEmail(email) {
 }
 
 function isPhoneNumber(phone) {
-  return /^(\d{2}-?\d{4}-?\d{4})$/.test(phone);
+  return /^0?\d{2}-?\d{4}-?\d{4}$/.test(phone);
 }
 
 function isLinkedIn(url) {
@@ -156,17 +156,15 @@ submitBtn.addEventListener("click", () => {
     toast.classList.add("active-toast");
     progressToast.classList.add("active-toast");
 
-    // Reset form and input styles after showing the toast
-    form.reset(); // Clear the form fields
-    resetInputStyles(); // Reset input styles
-    currentActive = 0; // Reset to the first step
+    form.reset();
+    resetInputStyles();
+    currentActive = 0;
     updateFormSteps();
     updateProgressbar();
 
-    // Ensure the toast remains visible for its full duration
     setTimeout(() => {
       toast.classList.remove("active-toast");
-    }, 5000); // Duration of the toast (5 seconds)
+    }, 5000);
   }
 });
 
