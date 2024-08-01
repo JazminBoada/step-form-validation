@@ -23,12 +23,11 @@ body {
   width: 100%;
   min-height: 100vh;
   color: var(--text-color);
-  background: rgb(125, 199, 196);
-  background: rgb(125, 199, 196);
+  background: rgb(247, 186, 186);
   background: linear-gradient(
-    327deg,
-    rgba(125, 199, 196, 1) 7%,
-    rgba(232, 171, 171, 1) 74%
+    125deg,
+    rgba(247, 186, 186, 1) 13%,
+    rgba(175, 198, 213, 1) 70%
   );
   overflow: hidden;
 }
@@ -66,6 +65,12 @@ body {
   display: flex;
 }
 
+.form {
+  height: 100%;
+  width: 45%;
+  padding: 0 24px 0 24px;
+}
+
 .form-img {
   display: flex;
   align-items: center;
@@ -78,13 +83,6 @@ body {
   max-width: 100%;
   max-height: 100%;
   object-fit: cover;
-  border-radius: 20px;
-}
-
-.form {
-  height: 100%;
-  width: 45%;
-  padding: 0 24px 0 24px;
 }
 
 .form h1 {
@@ -343,4 +341,74 @@ input:focus {
 .progress-step.active {
   background-color: var(--primary-color);
   color: #fff;
+}
+
+@media (max-width: 1024px) and (min-width: 768px) {
+  .container {
+    width: 100%;
+    max-width: 700px;
+    height: 670px;
+  }
+}
+
+@media (max-width: 768px) and (min-width: 425px) {
+  body {
+    background: #fff;
+  }
+  .container {
+    width: 100%;
+    max-width: 100%;
+    height: 680px;
+    box-shadow: none;
+  }
+
+  .form {
+    height: 100%;
+    width: 100%;
+    padding: 0 24px 0 24px;
+  }
+
+  .form h1 {
+    font-size: 50px;
+  }
+
+  .form-img {
+    display: none;
+  }
+
+  .btn {
+    width: 45%;
+    margin: auto;
+  }
+}
+
+@media (max-width: 425px) {
+  body {
+    background: #fff;
+  }
+  .container {
+    width: 100%;
+    max-width: 100%;
+    height: 680px;
+    box-shadow: none;
+  }
+
+  .form {
+    height: 100%;
+    width: 100%;
+    padding: 0 24px 0 24px;
+  }
+
+  .form h1 {
+    font-size: 50px;
+  }
+
+  .form-img {
+    display: none;
+  }
+
+  .btn {
+    width: 45%;
+    margin: auto;
+  }
 }

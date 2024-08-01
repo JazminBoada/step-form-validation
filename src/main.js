@@ -44,7 +44,7 @@ function updateProgressbar() {
   progress.style.width = progressBar + "%";
 }
 
-//Validación del form
+// Validación del form
 
 const form = document.getElementById("form");
 const fields = {
@@ -63,19 +63,13 @@ Object.values(fields).forEach((field) => {
   field.addEventListener("input", () => checkSingleInput(field));
 });
 
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
-  if (checkInputs(currentActive)) {
-    console.log("Formulario enviado!");
-  }
-});
-
 function checkInputs(step) {
   let valid = true;
   const stepInputs = formStep[step].querySelectorAll("input");
 
   stepInputs.forEach((input) => {
-    if (!checkSingleInput(input)) {
+    const isValid = checkSingleInput(input);
+    if (!isValid) {
       valid = false;
     }
   });
@@ -88,7 +82,7 @@ function checkSingleInput(input) {
   const id = input.id;
 
   if (value === "") {
-    setErrorFor(input, `This field cannot be blank`);
+    setErrorFor(input, "This field cannot be blank");
     return false;
   } else if (id === "email" && !isEmail(value)) {
     setErrorFor(input, "Not a valid email");
@@ -97,7 +91,7 @@ function checkSingleInput(input) {
     setErrorFor(input, "Not a valid phone number");
     return false;
   } else if (id === "linkedin" && !isLinkedIn(value)) {
-    setErrorFor(input, "Not a valid Profile LinkedIn URL");
+    setErrorFor(input, "Not a valid LinkedIn Profile URL");
     return false;
   } else if (id === "password2" && fields.password.value !== value) {
     setErrorFor(input, "Passwords do not match");
@@ -120,6 +114,13 @@ function setSuccessFor(input) {
   inputGroup.className = "input-group success";
 }
 
+function resetInputStyles() {
+  Object.values(fields).forEach((input) => {
+    const inputGroup = input.parentElement;
+    inputGroup.className = "input-group"; // Reset to default style
+  });
+}
+
 function isEmail(email) {
   return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
     email
@@ -134,11 +135,41 @@ function isLinkedIn(url) {
   return /^https:\/\/(www\.)?linkedin\.com\/in\/[a-zA-Z0-9_-]+\/?$/.test(url);
 }
 
-//General
+// General
 
 window.addEventListener("load", () => {
   const element = document.querySelector(".expand-from-center");
   if (element) {
     element.classList.add("visible");
   }
+});
+
+// Notification
+
+const submitBtn = document.querySelector(".btn-send");
+const toast = document.querySelector(".toast");
+const closeIcon = document.querySelector(".close");
+const progressToast = document.querySelector(".progress-toast");
+
+submitBtn.addEventListener("click", () => {
+  if (checkInputs(currentActive)) {
+    toast.classList.add("active-toast");
+    progressToast.classList.add("active-toast");
+
+    // Reset form and input styles after showing the toast
+    form.reset(); // Clear the form fields
+    resetInputStyles(); // Reset input styles
+    currentActive = 0; // Reset to the first step
+    updateFormSteps();
+    updateProgressbar();
+
+    // Ensure the toast remains visible for its full duration
+    setTimeout(() => {
+      toast.classList.remove("active-toast");
+    }, 5000); // Duration of the toast (5 seconds)
+  }
+});
+
+closeIcon.addEventListener("click", () => {
+  toast.classList.remove("active-toast");
 });
